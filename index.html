@@ -23,8 +23,8 @@
 
     body {
       background:
-        radial-gradient(ellipse 65% 40% at 85% 0%, rgba(168, 85, 247, 0.14), transparent 65%),
-        radial-gradient(ellipse 60% 35% at 15% 100%, rgba(184, 242, 39, 0.09), transparent 70%),
+        radial-gradient(ellipse 65% 40% at 85% 0%, rgba(168, 85, 247, 0.16), transparent 65%),
+        radial-gradient(ellipse 60% 35% at 15% 100%, rgba(184, 242, 39, 0.1), transparent 70%),
         var(--bg);
       color: var(--text);
       font-family: var(--sans);
@@ -62,7 +62,7 @@
       height: 7px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 8px rgba(168, 85, 247, 0.55);
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
     }
 
     .palette-btn {
@@ -105,7 +105,7 @@
 
     .intro h1 span {
       color: var(--accent);
-      text-shadow: 0 0 18px rgba(168, 85, 247, 0.45);
+      text-shadow: 0 0 18px rgba(168, 85, 247, 0.5);
     }
 
     .intro p {
@@ -115,19 +115,34 @@
       margin-bottom: 12px;
     }
 
-    .stack-line {
+    .meta-row {
       margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
       font-family: var(--mono);
       font-size: 0.82rem;
       color: var(--muted);
     }
 
-    .stack-line span {
-      color: var(--purple);
+    .purple-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #d8b4fe;
+    }
+
+    .purple-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--purple);
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
     }
 
     .actions {
-      margin-top: 28px;
+      margin-top: 26px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
@@ -167,28 +182,30 @@
       color: var(--muted);
     }
 
-    .readme-box {
-      display: block;
+    .readme-details {
       margin-top: 20px;
-      padding: 14px 16px;
-      background: linear-gradient(90deg, rgba(168, 85, 247, 0.09), var(--surface) 45%);
-      border: 1px solid rgba(168, 85, 247, 0.35);
+      background: linear-gradient(90deg, rgba(168, 85, 247, 0.12), var(--surface) 45%);
+      border: 1px solid rgba(168, 85, 247, 0.4);
       border-left: 3px solid var(--purple);
       border-radius: 6px;
+      padding: 12px 16px;
       font-family: var(--mono);
       font-size: 0.84rem;
-      color: var(--text);
     }
 
-    .readme-box.hidden { display: none; }
+    .readme-details summary {
+      cursor: pointer;
+      color: #e9d5ff;
+      font-weight: 600;
+      list-style: none;
+    }
 
-    .readme-label {
-      display: block;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--purple);
-      margin-bottom: 4px;
+    .readme-details summary::-webkit-details-marker { display: none; }
+
+    .readme-details p {
+      margin: 8px 0 0;
+      color: var(--text);
+      font-size: 0.86rem;
     }
 
     /* Projects */
@@ -394,7 +411,14 @@
         <p>
           Open to small web builds, experiments, and collaborating on weird ideas.
         </p>
-        <div class="stack-line">JavaScript <span>·</span> Robotics <span>·</span> Embedded / IoT <span>·</span> Web</div>
+
+        <div class="meta-row">
+          <span>JavaScript · Robotics · Embedded / IoT · Web</span>
+          <span class="purple-hint">
+            <span class="purple-swatch" aria-hidden="true"></span>
+            <span>Purple hint: #a855f7</span>
+          </span>
+        </div>
 
         <div class="actions">
           <a class="link-btn" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
@@ -403,10 +427,10 @@
           <span class="email-note" id="emailStatus">sidhuvinod777@gmail.com</span>
         </div>
 
-        <div class="readme-box" id="readmeBox">
-          <span class="readme-label">README</span>
-          I used AI to make the glow effects and blending clours
-        </div>
+        <details class="readme-details" id="readmeBox" open>
+          <summary>README</summary>
+          <p>I used AI to make the glow effects and blending clours</p>
+        </details>
       </section>
 
       <section class="projects" id="projects">
@@ -509,7 +533,8 @@
     const readmeBtn = document.getElementById('toggleReadme');
     const readmeBox = document.getElementById('readmeBox');
     readmeBtn.addEventListener('click', () => {
-      readmeBox.classList.toggle('hidden');
+      readmeBox.open = !readmeBox.open;
+      readmeBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
 
     // Command palette
@@ -520,7 +545,7 @@
     const COMMANDS = [
       { label: 'Jump to About', hint: '#about', action: () => document.getElementById('about').scrollIntoView({ behavior: 'smooth' }) },
       { label: 'Jump to Projects', hint: '#projects', action: () => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }) },
-      { label: 'Toggle README note', hint: 'AI note', action: () => readmeBox.classList.toggle('hidden') },
+      { label: 'Toggle README note', hint: 'AI note', action: () => { readmeBox.open = !readmeBox.open; } },
       { label: 'Copy Email', hint: EMAIL, action: copyAddress },
       { label: 'Open GitHub', hint: 'Ghost8911', action: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
       { label: 'Open UI Trap', hint: 'Live demo', action: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
