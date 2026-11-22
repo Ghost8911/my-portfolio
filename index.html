@@ -14,6 +14,7 @@
       --text: #eef1e8;
       --muted: #9aa28e;
       --accent: #b8f227;
+      --purple: #a855f7;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -21,7 +22,10 @@
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background:
+        radial-gradient(ellipse 65% 40% at 85% 0%, rgba(168, 85, 247, 0.14), transparent 65%),
+        radial-gradient(ellipse 60% 35% at 15% 100%, rgba(184, 242, 39, 0.09), transparent 70%),
+        var(--bg);
       color: var(--text);
       font-family: var(--sans);
       line-height: 1.6;
@@ -58,6 +62,7 @@
       height: 7px;
       border-radius: 50%;
       background: var(--accent);
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.55);
     }
 
     .palette-btn {
@@ -73,7 +78,7 @@
       gap: 8px;
     }
 
-    .palette-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .palette-btn:hover { border-color: var(--purple); color: var(--text); }
 
     .palette-btn kbd {
       font-size: 0.72rem;
@@ -81,7 +86,7 @@
       border-radius: 4px;
       background: #0c0d0a;
       border: 1px solid var(--border);
-      color: var(--muted);
+      color: var(--purple);
     }
 
     /* Intro */
@@ -98,7 +103,10 @@
       margin-bottom: 18px;
     }
 
-    .intro h1 span { color: var(--accent); }
+    .intro h1 span {
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(168, 85, 247, 0.45);
+    }
 
     .intro p {
       font-size: 1.05rem;
@@ -112,6 +120,10 @@
       font-family: var(--mono);
       font-size: 0.82rem;
       color: var(--muted);
+    }
+
+    .stack-line span {
+      color: var(--purple);
     }
 
     .actions {
@@ -147,7 +159,7 @@
       border: 1px solid var(--border);
     }
 
-    .ghost-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .ghost-btn:hover { border-color: var(--purple); color: var(--text); }
 
     .email-note {
       font-family: var(--mono);
@@ -156,19 +168,28 @@
     }
 
     .readme-box {
-      display: none;
-      margin-top: 18px;
+      display: block;
+      margin-top: 20px;
       padding: 14px 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(168, 85, 247, 0.09), var(--surface) 45%);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-left: 3px solid var(--purple);
       border-radius: 6px;
       font-family: var(--mono);
       font-size: 0.84rem;
       color: var(--text);
     }
 
-    .readme-box.open { display: block; }
+    .readme-box.hidden { display: none; }
+
+    .readme-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--purple);
+      margin-bottom: 4px;
+    }
 
     /* Projects */
     .projects { padding: 48px 0 72px; }
@@ -189,7 +210,7 @@
     .section-head span {
       font-family: var(--mono);
       font-size: 0.78rem;
-      color: var(--muted);
+      color: var(--purple);
     }
 
     .project-list {
@@ -241,8 +262,8 @@
     }
 
     .project-links a:hover {
-      color: var(--accent);
-      border-color: var(--accent);
+      color: var(--purple);
+      border-color: var(--purple);
     }
 
     /* Command palette */
@@ -264,10 +285,10 @@
       width: 100%;
       max-width: 480px;
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(168, 85, 247, 0.4);
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
     }
 
     .palette-top {
@@ -324,14 +345,14 @@
     }
 
     .result:hover, .result.selected {
-      background: rgba(184, 242, 39, 0.12);
-      color: var(--accent);
+      background: rgba(168, 85, 247, 0.16);
+      color: var(--text);
     }
 
     .result small {
       font-family: var(--mono);
       font-size: 0.76rem;
-      color: var(--muted);
+      color: var(--purple);
     }
 
     .no-match {
@@ -373,7 +394,7 @@
         <p>
           Open to small web builds, experiments, and collaborating on weird ideas.
         </p>
-        <div class="stack-line">JavaScript · Robotics · Embedded / IoT · Web</div>
+        <div class="stack-line">JavaScript <span>·</span> Robotics <span>·</span> Embedded / IoT <span>·</span> Web</div>
 
         <div class="actions">
           <a class="link-btn" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
@@ -383,7 +404,8 @@
         </div>
 
         <div class="readme-box" id="readmeBox">
-          I used AI to make the glow effects and blending colours
+          <span class="readme-label">README</span>
+          I used AI to make the glow effects and blending clours
         </div>
       </section>
 
@@ -487,7 +509,7 @@
     const readmeBtn = document.getElementById('toggleReadme');
     const readmeBox = document.getElementById('readmeBox');
     readmeBtn.addEventListener('click', () => {
-      readmeBox.classList.toggle('open');
+      readmeBox.classList.toggle('hidden');
     });
 
     // Command palette
@@ -498,7 +520,7 @@
     const COMMANDS = [
       { label: 'Jump to About', hint: '#about', action: () => document.getElementById('about').scrollIntoView({ behavior: 'smooth' }) },
       { label: 'Jump to Projects', hint: '#projects', action: () => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }) },
-      { label: 'Toggle README note', hint: 'AI note', action: () => readmeBox.classList.toggle('open') },
+      { label: 'Toggle README note', hint: 'AI note', action: () => readmeBox.classList.toggle('hidden') },
       { label: 'Copy Email', hint: EMAIL, action: copyAddress },
       { label: 'Open GitHub', hint: 'Ghost8911', action: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
       { label: 'Open UI Trap', hint: 'Live demo', action: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
