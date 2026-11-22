@@ -12,7 +12,7 @@
       color: #e6e6e6;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       line-height: 1.55;
-      padding: 24px 18px 64px;
+      padding: 24px 18px 80px;
     }
 
     .container {
@@ -61,16 +61,17 @@
       color: #c8ff2e;
     }
 
+    /* Name-first opening view, extra details reveal on scroll */
     .hero {
-      padding: 40px 0 36px;
+      padding: 28vh 0 18vh;
       border-bottom: 1px solid #282828;
     }
 
-    .profile-top {
+    .name-stage {
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-bottom: 18px;
+      min-height: 76px;
     }
 
     .avatar {
@@ -79,7 +80,10 @@
       border-radius: 8px;
       object-fit: cover;
       border: 1px solid #383838;
-      transition: border-color 0.15s ease, transform 0.15s ease;
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(8px);
+      transition: opacity 0.65s ease 0.12s, filter 0.65s ease 0.12s, transform 0.65s ease 0.12s, border-color 0.15s ease;
     }
 
     .avatar:hover {
@@ -103,16 +107,72 @@
     }
 
     h1 {
-      font-size: 36px;
+      font-size: clamp(38px, 7vw, 56px);
       font-weight: 700;
       color: #ffffff;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      filter: blur(14px);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: nameBlurIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes nameBlurIn {
+      0% {
+        filter: blur(14px);
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        filter: blur(0);
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .scroll-cue {
+      margin-top: 22px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 12px;
+      color: #888888;
+      opacity: 0;
+      animation: cueIn 0.6s ease 0.55s forwards;
+      transition: opacity 0.25s ease;
+    }
+
+    .scroll-cue.hidden {
+      opacity: 0 !important;
+      pointer-events: none;
+    }
+
+    @keyframes cueIn {
+      to { opacity: 1; }
+    }
+
+    /* Scroll-revealed blocks */
+    .reveal {
+      opacity: 0;
+      filter: blur(6px);
+      transform: translateY(16px);
+      transition: opacity 0.55s ease, filter 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    .details-block {
+      margin-top: 28px;
     }
 
     .sub {
       font-family: Consolas, Monaco, monospace;
       font-size: 13px;
       color: #9c9c9c;
+      margin-bottom: 12px;
     }
 
     .hero p {
@@ -178,7 +238,7 @@
     }
 
     .work {
-      padding-top: 32px;
+      padding-top: 36px;
     }
 
     h2 {
@@ -334,6 +394,16 @@
       font-size: 11px;
       color: #888888;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      h1, .scroll-cue, .reveal, .avatar {
+        animation: none !important;
+        transition: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -347,39 +417,43 @@
     </header>
 
     <section class="hero" id="about">
-      <div class="profile-top">
-        <img
-          class="avatar"
-          src="avatar.jpg"
-          alt="Sidharth"
-          width="68"
-          height="68"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-        >
-        <div class="avatar-fallback" aria-hidden="true">S</div>
-        <div>
-          <h1>Sidharth</h1>
-          <div class="sub">@Ghost8911 · 15</div>
-        </div>
+      <div class="name-stage">
+        <h1>Sidharth</h1>
       </div>
+      <div class="scroll-cue" id="scrollCue">scroll down for details ↓</div>
 
-      <p>
-        I build websites and tinker with hardware from Kerala. Most days I'm either writing frontend code or wiring up servos and boards.
-      </p>
-      <p>
-        Down for small web gigs, experiments, and building weird stuff with other makers.
-      </p>
+      <div class="details-block reveal" id="details">
+        <div class="profile-top" style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <img
+            class="avatar visible"
+            src="avatar.jpg"
+            alt="Sidharth"
+            width="68"
+            height="68"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          >
+          <div class="avatar-fallback" aria-hidden="true">S</div>
+          <div class="sub" style="margin-bottom:0;">@Ghost8911 · 15</div>
+        </div>
 
-      <div class="skills">JavaScript · Robotics · Embedded / IoT · Web</div>
+        <p>
+          I build websites and tinker with hardware from Kerala. Most days I'm either writing frontend code or wiring up servos and boards.
+        </p>
+        <p>
+          Down for small web gigs, experiments, and building weird stuff with other makers.
+        </p>
 
-      <div class="btns">
-        <a class="btn-lime" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
-        <button class="btn-dark" id="copyBtn" type="button">Copy email</button>
-        <span class="email-txt" id="emailTxt">sidhuvinod777@gmail.com</span>
+        <div class="skills">JavaScript · Robotics · Embedded / IoT · Web</div>
+
+        <div class="btns">
+          <a class="btn-lime" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
+          <button class="btn-dark" id="copyBtn" type="button">Copy email</button>
+          <span class="email-txt" id="emailTxt">sidhuvinod777@gmail.com</span>
+        </div>
       </div>
     </section>
 
-    <section class="work" id="projects">
+    <section class="work reveal" id="projects">
       <h2>Projects</h2>
       <div id="list"></div>
     </section>
@@ -428,7 +502,7 @@
 
     const list = document.getElementById('list');
     list.innerHTML = projects.map(p => `
-      <div class="item">
+      <div class="item reveal">
         <div class="item-top">
           <span class="item-title">${p.name}</span>
           <span class="item-type">${p.type}</span>
@@ -440,6 +514,35 @@
         </div>
       </div>
     `).join('');
+
+    // Reveal details and projects smoothly on scroll
+    const scrollCue = document.getElementById('scrollCue');
+    const reveals = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -24px 0px' }
+      );
+      reveals.forEach(el => observer.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        scrollCue?.classList.add('hidden');
+      } else {
+        scrollCue?.classList.remove('hidden');
+      }
+    }, { passive: true });
 
     function updateClock() {
       document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-IN', {
@@ -470,13 +573,17 @@
     }
     copyBtn.addEventListener('click', copyEmail);
 
+    function revealAllForJump() {
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+
     const modalBg = document.getElementById('modalBg');
     const cmdInput = document.getElementById('cmdInput');
     const cmdList = document.getElementById('cmdList');
 
     const actions = [
-      { label: 'About', hint: '#about', run: () => document.getElementById('about').scrollIntoView({ behavior: 'smooth' }) },
-      { label: 'Projects', hint: '#projects', run: () => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'About', hint: '#about', run: () => { revealAllForJump(); document.getElementById('about').scrollIntoView({ behavior: 'smooth' }); } },
+      { label: 'Projects', hint: '#projects', run: () => { revealAllForJump(); document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }); } },
       { label: 'Copy email', hint: EMAIL, run: copyEmail },
       { label: 'GitHub profile', hint: 'Ghost8911', run: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
       { label: 'UI Trap live', hint: 'Demo', run: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
