@@ -119,6 +119,22 @@
       border-color: var(--accent);
     }
 
+    .avatar-fallback {
+      width: 76px;
+      height: 76px;
+      border-radius: 16px;
+      border: 1px solid rgba(168, 85, 247, 0.55);
+      background: var(--surface);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
     .intro h1 {
       font-size: clamp(2.1rem, 5vw, 3.1rem);
       font-weight: 700;
@@ -446,7 +462,15 @@
     <main>
       <section class="intro" id="about">
         <div class="hero-head">
-          <img class="avatar" src=".jpg" alt="Sidharth profile picture" width="76" height="76">
+          <img
+            class="avatar"
+            src="avatar.jpg"
+            alt="Sidharth profile picture"
+            width="76"
+            height="76"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          >
+          <div class="avatar-fallback" aria-hidden="true">S.</div>
           <div>
             <h1>Sidharth<span>.</span></h1>
             <div class="handle">@Ghost8911</div>
@@ -472,7 +496,7 @@
 
         <details class="readme-details" id="readmeBox" open>
           <summary>README</summary>
-          <p>I used AI to make the glow effects and blending clours</p>
+          <p>I used AI to make the glow effects and blending colours</p>
         </details>
       </section>
 
