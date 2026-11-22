@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sidharth | Portfolio</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --lime: #b6ff00;
@@ -103,8 +103,8 @@
       animation: rise .6s ease-out;
     }
     .hero h1 { font-size: 2.8rem; margin-bottom: 12px; letter-spacing: -0.02em; }
-    .hero p { opacity: .82; line-height: 1.6; max-width: 52ch; margin-inline: auto; }
-    .hero p + p { margin-top: 6px; }
+    .hero p { opacity: .85; line-height: 1.65; max-width: 52ch; margin-inline: auto; }
+    .hero p + p { margin-top: 8px; opacity: .75; font-size: 0.96rem; }
 
     .tags {
       display: flex;
@@ -177,7 +177,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
       perspective: 900px;
     }
@@ -212,7 +212,8 @@
       color: var(--lime);
       margin-bottom: 6px;
     }
-    .card h3 { font-size: 1.2rem; }
+    .card h3 { font-size: 1.2rem; margin-bottom: 6px; }
+    .card p { font-size: 0.88rem; color: rgba(255, 255, 255, 0.72); line-height: 1.5; }
     .card-links { display: flex; gap: 16px; position: relative; z-index: 2; }
     .card a { color: var(--lime); text-decoration: none; font-weight: 600; font-size: 0.92rem; }
     .card a:hover { text-decoration: underline; }
@@ -282,8 +283,12 @@
       justify-content: space-between;
       align-items: center;
     }
-    .cmd-item:hover { background: rgba(182, 255, 0, 0.12); border-color: rgba(182, 255, 0, 0.35); }
-    .cmd-item span { opacity: 0.55; font-size: 0.8rem; }
+    .cmd-item:hover, .cmd-item.active {
+      background: rgba(182, 255, 0, 0.12);
+      border-color: rgba(182, 255, 0, 0.35);
+    }
+    .cmd-item span { opacity: 0.6; font-size: 0.8rem; }
+    .cmd-empty { padding: 14px; text-align: center; opacity: 0.6; font-size: 0.9rem; }
 
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -313,9 +318,9 @@
   </nav>
 
   <header class="hero glass" id="about">
-    <h1>Hi, I'm Sidharth</h1>
-    <p>Freelance web developer from Kerala.</p>
-    <p>I'm a 15yo who likes to build cool hardware projects.</p>
+    <h1>Hey, I'm Sidharth</h1>
+    <p>15, building things on the web and tinkering with hardware in Kerala.</p>
+    <p>Usually soldering servos, flashing microcontrollers, or shipping clean frontends.</p>
 
     <div class="tags">
       <span class="tag">Web Dev</span>
@@ -331,28 +336,48 @@
   </header>
 
   <section class="section" id="projects">
-    <h2>Projects</h2>
+    <h2>Stuff I've Built</h2>
     <div class="grid" id="grid"></div>
   </section>
 
-  <!-- Command Palette (Ctrl+K) -->
   <div class="overlay" id="cmdOverlay">
     <div class="modal-box">
       <div class="modal-top">
-        <span class="card-badge">Command Palette</span>
-        <button class="close-btn" id="closeCmd">✕</button>
+        <span class="card-badge">Jump Around</span>
+        <button class="close-btn" id="closeCmd" aria-label="Close menu">✕</button>
       </div>
-      <input class="cmd-input" id="cmdInput" placeholder="Type a command (projects, github, email, trap)..." autocomplete="off">
+      <input class="cmd-input" id="cmdInput" placeholder="Search projects, GitHub, or email..." autocomplete="off">
       <div class="cmd-list" id="cmdList"></div>
     </div>
   </div>
 
   <script>
     const projects = [
-      { title: 'Robotic Hand', tag: 'Hardware', repo: 'https://github.com/Ghost8911/Robotic-Hand' },
-      { title: 'Bionic Arm', tag: 'Hardware', repo: 'https://github.com/Ghost8911/Bionic-arm' },
-      { title: 'UI Trap', tag: 'Web', repo: 'https://github.com/Ghost8911/useless-website', live: 'https://ghost8911.github.io/useless-website/' },
-      { title: 'Climate Action', tag: 'Web', repo: 'https://github.com/Ghost8911/climate-action' }
+      {
+        title: 'Robotic Hand',
+        tag: 'Hardware',
+        desc: 'Multi-fingered mechanical hand built around servo actuation and custom linkage.',
+        repo: 'https://github.com/Ghost8911/Robotic-Hand'
+      },
+      {
+        title: 'Bionic Arm',
+        tag: 'Hardware',
+        desc: 'Articulated arm prototype exploring motion control and structural wearables.',
+        repo: 'https://github.com/Ghost8911/Bionic-arm'
+      },
+      {
+        title: 'UI Trap',
+        tag: 'Web',
+        desc: 'An intentionally mischievous web experiment that messes with normal clicks.',
+        repo: 'https://github.com/Ghost8911/useless-website',
+        live: 'https://ghost8911.github.io/useless-website/'
+      },
+      {
+        title: 'Climate Action',
+        tag: 'Web',
+        desc: 'Interactive web project focused on sustainability and environmental awareness.',
+        repo: 'https://github.com/Ghost8911/climate-action'
+      }
     ];
 
     const grid = document.getElementById('grid');
@@ -363,10 +388,11 @@
         <div>
           <span class="card-badge">${p.tag}</span>
           <h3>${p.title}</h3>
+          <p>${p.desc}</p>
         </div>
         <div class="card-links">
-          <a href="${p.repo}" target="_blank" rel="noopener">GitHub →</a>
-          ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live →</a>` : ''}
+          <a href="${p.repo}" target="_blank" rel="noopener">Repo →</a>
+          ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Try it →</a>` : ''}
         </div>
       `;
 
@@ -398,53 +424,94 @@
     setInterval(updateClock, 15000);
 
     const copyBtn = document.getElementById('copyEmail');
-    const EMAIL = 'sidharth@example.com';
-    copyBtn.onclick = () => {
-      navigator.clipboard?.writeText(EMAIL);
-      copyBtn.textContent = 'Copied Email!';
-      setTimeout(() => copyBtn.textContent = 'Copy Email', 1800);
+    const EMAIL = 'sidhuvinod777@gmail.com';
+    let copyTimer;
+    copyBtn.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        copyBtn.textContent = 'Copied!';
+      } catch {
+        copyBtn.textContent = EMAIL;
+      }
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => { copyBtn.textContent = 'Copy Email'; }, 1800);
     };
 
     const cmdOverlay = document.getElementById('cmdOverlay');
     const cmdInput = document.getElementById('cmdInput');
     const cmdList = document.getElementById('cmdList');
     const commands = [
-      { label: 'Jump to Projects', hint: '#projects', run: () => location.hash = '#projects' },
-      { label: 'Open GitHub Profile', hint: 'github.com/Ghost8911', run: () => window.open('https://github.com/Ghost8911', '_blank') },
-      { label: 'Play UI Trap', hint: 'Live Demo', run: () => window.open('https://ghost8911.github.io/useless-website/', '_blank') },
-      { label: 'Copy Email Address', hint: EMAIL, run: () => copyBtn.click() }
+      { label: 'Go to Projects', hint: '#projects', run: () => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Open GitHub', hint: 'github.com/Ghost8911', run: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
+      { label: 'Launch UI Trap', hint: 'Live site', run: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
+      { label: 'Copy Email', hint: EMAIL, run: () => copyBtn.click() }
     ];
 
+    let activeIdx = 0;
+    let visibleCmds = commands;
+
     function renderCommands(q = '') {
-      const filtered = commands.filter(c => c.label.toLowerCase().includes(q.toLowerCase()) || c.hint.toLowerCase().includes(q.toLowerCase()));
+      const term = q.trim().toLowerCase();
+      visibleCmds = commands.filter(c =>
+        c.label.toLowerCase().includes(term) || c.hint.toLowerCase().includes(term)
+      );
+      activeIdx = 0;
       cmdList.innerHTML = '';
-      filtered.forEach(c => {
+
+      if (!visibleCmds.length) {
+        cmdList.innerHTML = '<div class="cmd-empty">Nothing matches that.</div>';
+        return;
+      }
+
+      visibleCmds.forEach((c, i) => {
         const btn = document.createElement('button');
-        btn.className = 'cmd-item';
+        btn.className = 'cmd-item' + (i === activeIdx ? ' active' : '');
         btn.innerHTML = `<b>${c.label}</b><span>${c.hint}</span>`;
-        btn.onclick = () => { cmdOverlay.classList.remove('open'); c.run(); };
+        btn.onmouseenter = () => setActive(i);
+        btn.onclick = () => { closePalette(); c.run(); };
         cmdList.appendChild(btn);
       });
+    }
+
+    function setActive(i) {
+      activeIdx = (i + visibleCmds.length) % visibleCmds.length;
+      [...cmdList.children].forEach((el, idx) => el.classList.toggle('active', idx === activeIdx));
     }
 
     function openPalette() {
       cmdInput.value = '';
       renderCommands();
       cmdOverlay.classList.add('open');
-      setTimeout(() => cmdInput.focus(), 30);
+      requestAnimationFrame(() => cmdInput.focus());
+    }
+
+    function closePalette() {
+      cmdOverlay.classList.remove('open');
     }
 
     document.getElementById('openCmd').onclick = openPalette;
-    document.getElementById('closeCmd').onclick = () => cmdOverlay.classList.remove('open');
-    cmdOverlay.onclick = e => { if (e.target === cmdOverlay) cmdOverlay.classList.remove('open'); };
+    document.getElementById('closeCmd').onclick = closePalette;
+    cmdOverlay.onclick = e => { if (e.target === cmdOverlay) closePalette(); };
     cmdInput.oninput = () => renderCommands(cmdInput.value);
+
+    cmdInput.addEventListener('keydown', e => {
+      if (!visibleCmds.length) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIdx + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIdx - 1); }
+      else if (e.key === 'Enter') {
+        e.preventDefault();
+        const chosen = visibleCmds[activeIdx];
+        closePalette();
+        chosen?.run();
+      }
+    });
 
     document.addEventListener('keydown', e => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        cmdOverlay.classList.contains('open') ? cmdOverlay.classList.remove('open') : openPalette();
-      } else if (e.key === 'Escape') {
-        cmdOverlay.classList.remove('open');
+        cmdOverlay.classList.contains('open') ? closePalette() : openPalette();
+      } else if (e.key === 'Escape' && cmdOverlay.classList.contains('open')) {
+        closePalette();
       }
     });
   </script>
