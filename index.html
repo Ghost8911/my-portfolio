@@ -3,514 +3,592 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sidharth | Portfolio</title>
+  <title>Sidharth — Web & Hardware</title>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --lime: #b6ff00;
-      --glass-bg: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(255, 255, 255, 0.16);
+      --bg: #0c0d0a;
+      --surface: #141611;
+      --border: #272b21;
+      --text: #eef1e8;
+      --muted: #9aa28e;
+      --accent: #b8f227;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, sans-serif;
-      color: #fff;
-      background: #000;
-      padding-bottom: 90px;
-      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .glow {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 70% 55% at 30% 100%, rgba(182, 255, 0, 0.72), transparent 72%),
-        radial-gradient(ellipse 65% 50% at 70% 100%, rgba(255, 255, 255, 0.5), transparent 72%),
-        #000;
-    }
-
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
-    }
-
-    .topbar {
-      max-width: 920px;
-      margin: 20px auto 0;
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
       padding: 0 20px;
+    }
+
+    /* Top bar */
+    .bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      font-size: 0.85rem;
-    }
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--glass-border);
-      color: rgba(255, 255, 255, 0.85);
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--lime);
-      box-shadow: 0 0 10px var(--lime);
-      animation: pulse 2s infinite;
-    }
-    .cmd-trigger {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--glass-border);
-      color: #fff;
-      font: inherit;
-      font-size: 0.82rem;
-      padding: 6px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: border-color .2s;
-    }
-    .cmd-trigger:hover { border-color: var(--lime); }
-    .kbd {
-      background: rgba(255, 255, 255, 0.12);
-      padding: 1px 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      color: var(--lime);
-    }
-
-    .hero {
-      max-width: 720px;
-      margin: 8vh auto 0;
-      padding: 52px 32px;
-      text-align: center;
-      animation: rise .6s ease-out;
-    }
-    .hero h1 { font-size: 2.8rem; margin-bottom: 12px; letter-spacing: -0.02em; }
-    .hero p { opacity: .85; line-height: 1.65; max-width: 52ch; margin-inline: auto; }
-    .hero p + p { margin-top: 8px; opacity: .75; font-size: 0.96rem; }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 24px;
-    }
-    .tag {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
       font-size: 0.8rem;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(182, 255, 0, 0.12);
-      border: 1px solid rgba(182, 255, 0, 0.35);
-      color: var(--lime);
+      color: var(--muted);
     }
 
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 26px;
-      flex-wrap: wrap;
-    }
-    .btn {
+    .live {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 10px 20px;
-      border-radius: 999px;
-      font: inherit;
-      font-weight: 600;
-      font-size: 0.92rem;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: transform .15s, background .2s, border-color .2s;
+      gap: 8px;
+      color: var(--text);
     }
-    .btn.primary { background: var(--lime); color: #000; }
-    .btn.primary:hover { transform: translateY(-2px); background: #c8ff3d; }
-    .btn.secondary {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border: 1px solid var(--glass-border);
-    }
-    .btn.secondary:hover { transform: translateY(-2px); border-color: var(--lime); }
 
-    .section {
-      max-width: 920px;
-      margin: 56px auto 0;
-      padding: 0 20px;
-      animation: rise .75s ease-out;
-    }
-    .section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .section h2::before {
-      content: "";
-      width: 10px;
-      height: 10px;
+    .live-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--lime);
-      box-shadow: 0 0 12px var(--lime);
+      background: var(--accent);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      perspective: 900px;
+    .palette-btn {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 6px 11px;
+      border-radius: 6px;
+      font: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-    .card {
-      position: relative;
-      overflow: hidden;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-      transform-style: preserve-3d;
-      transition: transform .15s ease-out, border-color .2s;
-    }
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(182, 255, 0, 0.18), transparent 70%);
-      opacity: 0;
-      transition: opacity .25s;
-      pointer-events: none;
-    }
-    .card:hover::before { opacity: 1; }
-    .card:hover { border-color: var(--lime); }
-    .card-badge {
-      display: inline-block;
+
+    .palette-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .palette-btn kbd {
       font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      color: var(--lime);
-      margin-bottom: 6px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #0c0d0a;
+      border: 1px solid var(--border);
+      color: var(--muted);
     }
-    .card h3 { font-size: 1.2rem; margin-bottom: 6px; }
-    .card p { font-size: 0.88rem; color: rgba(255, 255, 255, 0.72); line-height: 1.5; }
-    .card-links { display: flex; gap: 16px; position: relative; z-index: 2; }
-    .card a { color: var(--lime); text-decoration: none; font-weight: 600; font-size: 0.92rem; }
-    .card a:hover { text-decoration: underline; }
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 100;
+    /* Intro */
+    .intro {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--border);
     }
-    .overlay.open { display: flex; animation: fadeIn .18s ease-out; }
-    .modal-box {
-      width: 100%;
-      max-width: 520px;
-      padding: 28px;
-      background: #0d0d0d;
-      border: 1px solid rgba(182, 255, 0, 0.4);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+
+    .intro h1 {
+      font-size: clamp(2.1rem, 5vw, 3.1rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 18px;
     }
-    .modal-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+
+    .intro h1 span { color: var(--accent); }
+
+    .intro p {
+      font-size: 1.05rem;
+      color: #cfd6c4;
+      max-width: 58ch;
       margin-bottom: 12px;
     }
-    .close-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--glass-border);
-      color: #fff;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
+
+    .stack-line {
+      margin-top: 20px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
     }
-    .close-btn:hover { border-color: var(--lime); color: var(--lime); }
-    .cmd-input {
+
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .link-btn, .ghost-btn {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      padding: 9px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .link-btn {
+      background: var(--accent);
+      color: #0c0d0a;
+      font-weight: 600;
+      border: 1px solid var(--accent);
+    }
+
+    .link-btn:hover { background: #c9ff3d; border-color: #c9ff3d; }
+
+    .ghost-btn {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .ghost-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .email-note {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .readme-box {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      color: var(--text);
+    }
+
+    .readme-box.open { display: block; }
+
+    /* Projects */
+    .projects { padding: 48px 0 72px; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .section-head span {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .project-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 96px 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-kind {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 3px;
+    }
+
+    .project-row h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .project-row p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 48ch;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .project-links a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+    }
+
+    .project-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Command palette */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 14vh;
+      padding-inline: 16px;
+      z-index: 50;
+    }
+
+    .backdrop.open { display: flex; }
+
+    .palette {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--glass-border);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    .palette-top {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding: 0 12px;
+    }
+
+    .palette input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
       font: inherit;
       font-size: 0.95rem;
+      padding: 13px 4px;
       outline: none;
-      margin-bottom: 12px;
     }
-    .cmd-input:focus { border-color: var(--lime); }
-    .cmd-list { display: flex; flex-direction: column; gap: 6px; }
-    .cmd-item {
-      padding: 10px 14px;
-      border-radius: 12px;
+
+    .esc-btn {
       background: transparent;
-      border: 1px solid transparent;
-      color: #fff;
-      font: inherit;
-      text-align: left;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 3px 7px;
+      border-radius: 4px;
       cursor: pointer;
+    }
+
+    .esc-btn:hover { color: var(--text); border-color: var(--muted); }
+
+    .palette-results {
+      max-height: 280px;
+      overflow-y: auto;
+      padding: 6px;
+    }
+
+    .result {
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .cmd-item:hover, .cmd-item.active {
-      background: rgba(182, 255, 0, 0.12);
-      border-color: rgba(182, 255, 0, 0.35);
-    }
-    .cmd-item span { opacity: 0.6; font-size: 0.8rem; }
-    .cmd-empty { padding: 14px; text-align: center; opacity: 0.6; font-size: 0.9rem; }
-
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.88rem;
+      padding: 9px 10px;
+      border-radius: 6px;
+      text-align: left;
+      cursor: pointer;
     }
 
-    @media (max-width: 600px) {
-      .hero { margin: 5vh 16px 0; padding: 38px 20px; }
-      .hero h1 { font-size: 2.1rem; }
+    .result:hover, .result.selected {
+      background: rgba(184, 242, 39, 0.12);
+      color: var(--accent);
+    }
+
+    .result small {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .no-match {
+      padding: 16px;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 620px) {
+      .project-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .project-links { margin-top: 4px; }
     }
   </style>
 </head>
 <body>
-  <div class="glow"></div>
-
-  <nav class="topbar">
-    <div class="status-pill">
-      <span class="dot"></span>
-      <span>Kerala, IN · <b id="clock">--:--</b> IST</span>
-    </div>
-    <button class="cmd-trigger" id="openCmd" title="Open Command Palette">
-      <span>Quick Menu</span>
-      <span class="kbd">Ctrl K</span>
-    </button>
-  </nav>
-
-  <header class="hero glass" id="about">
-    <h1>Hey, I'm Sidharth</h1>
-    <p>15, building things on the web and tinkering with hardware in Kerala.</p>
-    <p>Usually soldering servos, flashing microcontrollers, or shipping clean frontends.</p>
-
-    <div class="tags">
-      <span class="tag">Web Dev</span>
-      <span class="tag">Robotics</span>
-      <span class="tag">Embedded / IoT</span>
-      <span class="tag">JavaScript</span>
-    </div>
-
-    <div class="socials">
-      <a class="btn primary" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
-      <button class="btn secondary" id="copyEmail">Copy Email</button>
-    </div>
-  </header>
-
-  <section class="section" id="projects">
-    <h2>Stuff I've Built</h2>
-    <div class="grid" id="grid"></div>
-  </section>
-
-  <div class="overlay" id="cmdOverlay">
-    <div class="modal-box">
-      <div class="modal-top">
-        <span class="card-badge">Jump Around</span>
-        <button class="close-btn" id="closeCmd" aria-label="Close menu">✕</button>
+  <div class="wrap">
+    <header class="bar">
+      <div class="live">
+        <span class="live-dot"></span>
+        <span>Kerala, IN · <span id="clock">--:--</span> IST</span>
       </div>
-      <input class="cmd-input" id="cmdInput" placeholder="Search projects, GitHub, or email..." autocomplete="off">
-      <div class="cmd-list" id="cmdList"></div>
+      <button class="palette-btn" id="openPalette" type="button">
+        <span>Commands</span>
+        <kbd>Ctrl+K</kbd>
+      </button>
+    </header>
+
+    <main>
+      <section class="intro" id="about">
+        <h1>Sidharth<span>.</span></h1>
+        <p>
+          15-year-old builder in Kerala making web stuff and messing with hardware.
+          Half my desk is usually servos, wires, and microcontrollers; the other half is browser tabs.
+        </p>
+        <p>
+          Open to small web builds, experiments, and collaborating on weird ideas.
+        </p>
+        <div class="stack-line">JavaScript · Robotics · Embedded / IoT · Web</div>
+
+        <div class="actions">
+          <a class="link-btn" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
+          <button class="ghost-btn" id="copyEmail" type="button">Copy email</button>
+          <button class="ghost-btn" id="toggleReadme" type="button">README</button>
+          <span class="email-note" id="emailStatus">sidhuvinod777@gmail.com</span>
+        </div>
+
+        <div class="readme-box" id="readmeBox">
+          I used AI to make the glow effects and blending colours
+        </div>
+      </section>
+
+      <section class="projects" id="projects">
+        <div class="section-head">
+          <h2>Projects</h2>
+          <span>4 repos</span>
+        </div>
+        <div class="project-list" id="projectList"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="backdrop" id="backdrop" aria-hidden="true">
+    <div class="palette" role="dialog" aria-label="Quick navigation">
+      <div class="palette-top">
+        <input id="paletteInput" type="text" placeholder="Type a command or project..." autocomplete="off">
+        <button class="esc-btn" id="closePalette" type="button">ESC</button>
+      </div>
+      <div class="palette-results" id="paletteResults"></div>
     </div>
   </div>
 
   <script>
-    const projects = [
+    const EMAIL = 'sidhuvinod777@gmail.com';
+
+    const PROJECTS = [
       {
+        kind: 'Hardware',
         title: 'Robotic Hand',
-        tag: 'Hardware',
-        desc: 'Multi-fingered mechanical hand built around servo actuation and custom linkage.',
+        summary: 'Servo-driven mechanical hand prototype focused on finger articulation and linkages.',
         repo: 'https://github.com/Ghost8911/Robotic-Hand'
       },
       {
+        kind: 'Hardware',
         title: 'Bionic Arm',
-        tag: 'Hardware',
-        desc: 'Articulated arm prototype exploring motion control and structural wearables.',
+        summary: 'Articulated arm build experimenting with movement range and wearable framing.',
         repo: 'https://github.com/Ghost8911/Bionic-arm'
       },
       {
+        kind: 'Web',
         title: 'UI Trap',
-        tag: 'Web',
-        desc: 'An intentionally mischievous web experiment that messes with normal clicks.',
+        summary: 'A deliberately annoying web toy that breaks standard UI expectations.',
         repo: 'https://github.com/Ghost8911/useless-website',
         live: 'https://ghost8911.github.io/useless-website/'
       },
       {
+        kind: 'Web',
         title: 'Climate Action',
-        tag: 'Web',
-        desc: 'Interactive web project focused on sustainability and environmental awareness.',
+        summary: 'Web project around environmental action and awareness.',
         repo: 'https://github.com/Ghost8911/climate-action'
       }
     ];
 
-    const grid = document.getElementById('grid');
-    projects.forEach(p => {
-      const card = document.createElement('article');
-      card.className = 'card glass';
-      card.innerHTML = `
+    const listEl = document.getElementById('projectList');
+    listEl.innerHTML = PROJECTS.map(p => `
+      <article class="project-row">
+        <span class="project-kind">${p.kind}</span>
         <div>
-          <span class="card-badge">${p.tag}</span>
           <h3>${p.title}</h3>
-          <p>${p.desc}</p>
+          <p>${p.summary}</p>
         </div>
-        <div class="card-links">
-          <a href="${p.repo}" target="_blank" rel="noopener">Repo →</a>
-          ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Try it →</a>` : ''}
+        <div class="project-links">
+          <a href="${p.repo}" target="_blank" rel="noopener">Code</a>
+          ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live</a>` : ''}
         </div>
-      `;
+      </article>
+    `).join('');
 
-      card.addEventListener('pointermove', e => {
-        if (e.pointerType !== 'mouse') return;
-        const r = card.getBoundingClientRect();
-        const x = e.clientX - r.left;
-        const y = e.clientY - r.top;
-        card.style.setProperty('--mx', x + 'px');
-        card.style.setProperty('--my', y + 'px');
-        const rx = ((y / r.height) - 0.5) * -8;
-        const ry = ((x / r.width) - 0.5) * 8;
-        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-      });
-      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-
-      grid.appendChild(card);
-    });
-
-    function updateClock() {
-      document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-IN', {
+    const clockEl = document.getElementById('clock');
+    const tickClock = () => {
+      clockEl.textContent = new Date().toLocaleTimeString('en-IN', {
         timeZone: 'Asia/Kolkata',
         hour: '2-digit',
         minute: '2-digit',
         hour12: true
       });
-    }
-    updateClock();
-    setInterval(updateClock, 15000);
+    };
+    tickClock();
+    setInterval(tickClock, 15000);
 
     const copyBtn = document.getElementById('copyEmail');
-    const EMAIL = 'sidhuvinod777@gmail.com';
-    let copyTimer;
-    copyBtn.onclick = async () => {
+    const statusEl = document.getElementById('emailStatus');
+    let resetTimeout;
+
+    async function copyAddress() {
+      clearTimeout(resetTimeout);
       try {
         await navigator.clipboard.writeText(EMAIL);
-        copyBtn.textContent = 'Copied!';
+        statusEl.textContent = 'Copied sidhuvinod777@gmail.com to clipboard';
       } catch {
-        copyBtn.textContent = EMAIL;
+        statusEl.textContent = EMAIL;
       }
-      clearTimeout(copyTimer);
-      copyTimer = setTimeout(() => { copyBtn.textContent = 'Copy Email'; }, 1800);
-    };
+      resetTimeout = setTimeout(() => {
+        statusEl.textContent = EMAIL;
+      }, 2400);
+    }
 
-    const cmdOverlay = document.getElementById('cmdOverlay');
-    const cmdInput = document.getElementById('cmdInput');
-    const cmdList = document.getElementById('cmdList');
-    const commands = [
-      { label: 'Go to Projects', hint: '#projects', run: () => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) },
-      { label: 'Open GitHub', hint: 'github.com/Ghost8911', run: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
-      { label: 'Launch UI Trap', hint: 'Live site', run: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
-      { label: 'Copy Email', hint: EMAIL, run: () => copyBtn.click() }
+    copyBtn.addEventListener('click', copyAddress);
+
+    const readmeBtn = document.getElementById('toggleReadme');
+    const readmeBox = document.getElementById('readmeBox');
+    readmeBtn.addEventListener('click', () => {
+      readmeBox.classList.toggle('open');
+    });
+
+    // Command palette
+    const backdrop = document.getElementById('backdrop');
+    const input = document.getElementById('paletteInput');
+    const resultsEl = document.getElementById('paletteResults');
+
+    const COMMANDS = [
+      { label: 'Jump to About', hint: '#about', action: () => document.getElementById('about').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Jump to Projects', hint: '#projects', action: () => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Toggle README note', hint: 'AI note', action: () => readmeBox.classList.toggle('open') },
+      { label: 'Copy Email', hint: EMAIL, action: copyAddress },
+      { label: 'Open GitHub', hint: 'Ghost8911', action: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
+      { label: 'Open UI Trap', hint: 'Live demo', action: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
+      ...PROJECTS.map(p => ({
+        label: `${p.title} repo`,
+        hint: p.kind,
+        action: () => window.open(p.repo, '_blank', 'noopener')
+      }))
     ];
 
-    let activeIdx = 0;
-    let visibleCmds = commands;
+    let filtered = COMMANDS;
+    let selected = 0;
 
-    function renderCommands(q = '') {
-      const term = q.trim().toLowerCase();
-      visibleCmds = commands.filter(c =>
-        c.label.toLowerCase().includes(term) || c.hint.toLowerCase().includes(term)
-      );
-      activeIdx = 0;
-      cmdList.innerHTML = '';
+    function drawResults(query = '') {
+      const q = query.trim().toLowerCase();
+      filtered = q
+        ? COMMANDS.filter(c => c.label.toLowerCase().includes(q) || c.hint.toLowerCase().includes(q))
+        : COMMANDS;
+      selected = 0;
 
-      if (!visibleCmds.length) {
-        cmdList.innerHTML = '<div class="cmd-empty">Nothing matches that.</div>';
+      if (!filtered.length) {
+        resultsEl.innerHTML = '<div class="no-match">No matching command</div>';
         return;
       }
 
-      visibleCmds.forEach((c, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'cmd-item' + (i === activeIdx ? ' active' : '');
-        btn.innerHTML = `<b>${c.label}</b><span>${c.hint}</span>`;
-        btn.onmouseenter = () => setActive(i);
-        btn.onclick = () => { closePalette(); c.run(); };
-        cmdList.appendChild(btn);
+      resultsEl.innerHTML = filtered.map((item, idx) => `
+        <button class="result${idx === selected ? ' selected' : ''}" type="button" data-idx="${idx}">
+          <span>${item.label}</span>
+          <small>${item.hint}</small>
+        </button>
+      `).join('');
+
+      resultsEl.querySelectorAll('.result').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.dataset.idx);
+          closePalette();
+          filtered[idx]?.action();
+        });
       });
     }
 
-    function setActive(i) {
-      activeIdx = (i + visibleCmds.length) % visibleCmds.length;
-      [...cmdList.children].forEach((el, idx) => el.classList.toggle('active', idx === activeIdx));
-    }
-
     function openPalette() {
-      cmdInput.value = '';
-      renderCommands();
-      cmdOverlay.classList.add('open');
-      requestAnimationFrame(() => cmdInput.focus());
+      backdrop.classList.add('open');
+      backdrop.setAttribute('aria-hidden', 'false');
+      input.value = '';
+      drawResults('');
+      requestAnimationFrame(() => input.focus());
     }
 
     function closePalette() {
-      cmdOverlay.classList.remove('open');
+      backdrop.classList.remove('open');
+      backdrop.setAttribute('aria-hidden', 'true');
     }
 
-    document.getElementById('openCmd').onclick = openPalette;
-    document.getElementById('closeCmd').onclick = closePalette;
-    cmdOverlay.onclick = e => { if (e.target === cmdOverlay) closePalette(); };
-    cmdInput.oninput = () => renderCommands(cmdInput.value);
+    document.getElementById('openPalette').addEventListener('click', openPalette);
+    document.getElementById('closePalette').addEventListener('click', closePalette);
+    backdrop.addEventListener('click', e => {
+      if (e.target === backdrop) closePalette();
+    });
 
-    cmdInput.addEventListener('keydown', e => {
-      if (!visibleCmds.length) return;
-      if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIdx + 1); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIdx - 1); }
-      else if (e.key === 'Enter') {
+    input.addEventListener('input', () => drawResults(input.value));
+    input.addEventListener('keydown', e => {
+      if (!filtered.length) return;
+      if (e.key === 'ArrowDown') {
         e.preventDefault();
-        const chosen = visibleCmds[activeIdx];
+        selected = (selected + 1) % filtered.length;
+        updateHighlight();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selected = (selected - 1 + filtered.length) % filtered.length;
+        updateHighlight();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const chosen = filtered[selected];
         closePalette();
-        chosen?.run();
+        chosen?.action();
       }
     });
+
+    function updateHighlight() {
+      resultsEl.querySelectorAll('.result').forEach((el, idx) => {
+        el.classList.toggle('selected', idx === selected);
+      });
+    }
 
     document.addEventListener('keydown', e => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        cmdOverlay.classList.contains('open') ? closePalette() : openPalette();
-      } else if (e.key === 'Escape' && cmdOverlay.classList.contains('open')) {
+        backdrop.classList.contains('open') ? closePalette() : openPalette();
+      } else if (e.key === 'Escape' && backdrop.classList.contains('open')) {
         closePalette();
       }
     });
