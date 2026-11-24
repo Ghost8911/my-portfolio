@@ -93,6 +93,14 @@
       ctx.strokeStyle = '#F9CE75'; ctx.beginPath(); ctx.moveTo(11, 11); ctx.lineTo(11 + Math.cos(h) * 5, 11 + Math.sin(h) * 5); ctx.moveTo(11, 11); ctx.lineTo(11 + Math.cos(m) * 7.5, 11 + Math.sin(m) * 7.5); ctx.stroke();
     }
     tick(); setInterval(tick, 1000);
+    const items = [
+      { tag: 'Hardware', name: 'Robotic Hand', desc: 'Mechanical hand build with servos and linkage parts.', url: 'https://github.com/Ghost8911/Robotic-Hand' },
+      { tag: 'Hardware', name: 'Bionic Arm', desc: 'Articulated arm prototype testing motion and fit.', url: 'https://github.com/Ghost8911/Bionic-arm' },
+      { tag: 'Web', name: 'UI Trap', desc: 'A mischievous little web experiment.', url: 'https://ghost8911.github.io/useless-website/' },
+      { tag: 'Web', name: 'Climate Action', desc: 'Web project around sustainability and action.', url: 'https://github.com/Ghost8911/climate-action' }
+    ];
+    document.getElementById('projList').innerHTML = items.map(p => `<article class="proj-card"><div><span class="proj-tag">${p.tag}</span><h3>${p.name}</h3><p>${p.desc}</p></div><div class="proj-links"><a href="${p.url}" target="_blank" rel="noopener">Open ↗</a></div></article>`).join('');
+    document.getElementById('copyBtn').onclick = () => { navigator.clipboard.writeText('sidhuvinod777@gmail.com'); document.getElementById('emailNote').textContent = 'Copied sidhuvinod777@gmail.com!'; };
   </script>
 </body>
 </html>
