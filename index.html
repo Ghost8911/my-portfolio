@@ -7,7 +7,9 @@
   <style>
     :root { --bg: #1F0822; --plum: #814881; --mauve: #D180C8; --terra: #E77665; --topaz: #F9CE75; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: #F7EFF6; font: 15px/1.6 system-ui, sans-serif; padding: 28px 24px 80px; }
+    body { background: var(--bg); color: #F7EFF6; font: 15px/1.6 system-ui, sans-serif; padding: 28px 24px 80px; max-width: 1080px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; border-bottom: 1px solid rgba(129,72,129,.45); font-size: 13px; color: var(--mauve); }
+    main { display: grid; grid-template-columns: 320px 1fr; gap: 56px; padding-top: 36px; align-items: start; }
   </style>
 </head>
 <body>
@@ -15,32 +17,36 @@
     <span>Kerala, IN · <span id="clock">--:--</span> IST</span>
     <button id="openCmd" type="button">Ctrl+K</button>
   </header>
-  <section id="about">
-    <img src="avatar.jpg" alt="Sidharth" width="120" height="120" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
-    <span style="display:none;">S</span>
-    <h1>Sidharth</h1>
-    <p>@Ghost8911 · 15</p>
-    <p>I build websites and tinker with hardware from Kerala. Most days I'm either writing frontend code or wiring up servos and boards.</p>
-    <p>Down for small web builds, experiments, and building weird stuff with other makers.</p>
+  <main>
     <div>
-      <a href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
-      <button id="copyBtn" type="button">Copy email</button>
-      <span id="emailNote">sidhuvinod777@gmail.com</span>
+      <section id="about">
+        <img src="avatar.jpg" alt="Sidharth" width="120" height="120" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+        <span style="display:none;">S</span>
+        <h1>Sidharth</h1>
+        <p>@Ghost8911 · 15</p>
+        <p>I build websites and tinker with hardware from Kerala. Most days I'm either writing frontend code or wiring up servos and boards.</p>
+        <p>Down for small web builds, experiments, and building weird stuff with other makers.</p>
+        <div>
+          <a href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
+          <button id="copyBtn" type="button">Copy email</button>
+          <span id="emailNote">sidhuvinod777@gmail.com</span>
+        </div>
+      </section>
+      <aside>
+        <p>Focus: JavaScript · Robotics · Embedded / IoT · Web</p>
+        <ul>
+          <li><a href="https://github.com/Ghost8911/Robotic-Hand" target="_blank" rel="noopener">Robotic Hand</a></li>
+          <li><a href="https://github.com/Ghost8911/Bionic-arm" target="_blank" rel="noopener">Bionic Arm</a></li>
+          <li><a href="https://ghost8911.github.io/useless-website/" target="_blank" rel="noopener">UI Trap (Live)</a></li>
+          <li><a href="https://github.com/Ghost8911/climate-action" target="_blank" rel="noopener">Climate Action</a></li>
+        </ul>
+      </aside>
     </div>
-  </section>
-  <aside>
-    <p>Focus: JavaScript · Robotics · Embedded / IoT · Web</p>
-    <ul>
-      <li><a href="https://github.com/Ghost8911/Robotic-Hand" target="_blank" rel="noopener">Robotic Hand</a></li>
-      <li><a href="https://github.com/Ghost8911/Bionic-arm" target="_blank" rel="noopener">Bionic Arm</a></li>
-      <li><a href="https://ghost8911.github.io/useless-website/" target="_blank" rel="noopener">UI Trap (Live)</a></li>
-      <li><a href="https://github.com/Ghost8911/climate-action" target="_blank" rel="noopener">Climate Action</a></li>
-    </ul>
-  </aside>
-  <section id="projects">
-    <h2>Projects</h2>
-    <div id="projList"></div>
-  </section>
+    <section id="projects">
+      <h2>Projects</h2>
+      <div id="projList"></div>
+    </section>
+  </main>
   <div id="palette" hidden>
     <input id="cmdInput" type="text" placeholder="Search commands or projects..." autocomplete="off">
     <button id="closeCmd" type="button">ESC</button>
