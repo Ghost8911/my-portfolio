@@ -433,3 +433,77 @@
     }
   </style>
 </head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="status">
+        <span class="dot"></span>
+        <span>Kerala, IN · <span id="clock">--:--</span> IST</span>
+      </div>
+      <button class="cmd-btn" id="openCmd" type="button">Ctrl+K</button>
+    </header>
+
+    <section class="hero" id="about">
+      <div class="bio">
+        <div class="me-row">
+          <img
+            class="avatar"
+            src="avatar.jpg"
+            alt="Sidharth"
+            width="128"
+            height="128"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          >
+          <div class="avatar-fallback" aria-hidden="true">S</div>
+          <div>
+            <h1>Sidharth<span>.</span></h1>
+            <div class="handle">@Ghost8911 · 15</div>
+          </div>
+        </div>
+
+        <p>
+          I build websites and tinker with hardware from Kerala. Most days I'm either writing frontend code or wiring up servos and boards.
+        </p>
+        <p>
+          Down for small web builds, experiments, and building weird stuff with other makers.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn-lime" href="https://github.com/Ghost8911" target="_blank" rel="noopener">GitHub</a>
+          <button class="btn-ghost" id="copyBtn" type="button">Copy email</button>
+          <span class="email-note" id="emailNote">sidhuvinod777@gmail.com</span>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="side-label">Focus</div>
+        <div class="stack-list">JavaScript · Robotics · Embedded / IoT · Web</div>
+
+        <div class="side-label">Quick Links</div>
+        <div class="repo-list">
+          <a href="https://github.com/Ghost8911/Robotic-Hand" target="_blank" rel="noopener">Robotic-Hand →</a>
+          <a href="https://github.com/Ghost8911/Bionic-arm" target="_blank" rel="noopener">Bionic-arm →</a>
+          <a href="https://ghost8911.github.io/useless-website/" target="_blank" rel="noopener">UI Trap (Live) →</a>
+          <a href="https://github.com/Ghost8911/climate-action" target="_blank" rel="noopener">climate-action →</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="projects" id="projects">
+      <div class="sec-head">
+        <h2>Projects</h2>
+        <span class="sec-count">// 04</span>
+      </div>
+      <div class="proj-grid" id="projGrid"></div>
+    </section>
+  </div>
+
+  <div class="palette-bg" id="paletteBg" aria-hidden="true">
+    <div class="palette-box">
+      <div class="palette-bar">
+        <input id="cmdInput" type="text" placeholder="Search commands or projects..." autocomplete="off">
+        <button class="esc-btn" id="closeCmd" type="button">ESC</button>
+      </div>
+      <div class="palette-list" id="cmdList"></div>
+    </div>
+  </div>
