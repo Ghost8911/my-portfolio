@@ -112,6 +112,149 @@
     }
 
     copyBtn.addEventListener('click', copyEmail);
+    const PROJECTS = [
+      {
+        title: 'Robotic Hand',
+        tag: 'Hardware',
+        desc: 'Mechanical hand built with servos and linkage parts.',
+        repo: 'https://github.com/Ghost8911/Robotic-Hand'
+      },
+      {
+        title: 'Bionic Arm',
+        tag: 'Hardware',
+        desc: 'Articulated arm prototype testing motion and fit.',
+        repo: 'https://github.com/Ghost8911/Bionic-arm'
+      },
+      {
+        title: 'UI Trap',
+        tag: 'Web',
+        desc: 'Small web experiment that messes with normal UI clicks.',
+        repo: 'https://github.com/Ghost8911/useless-website',
+        live: 'https://ghost8911.github.io/useless-website/'
+      },
+      {
+        title: 'Climate Action',
+        tag: 'Web',
+        desc: 'Web project focused on environmental action.',
+        repo: 'https://github.com/Ghost8911/climate-action'
+      }
+    ];
+
+    const projList = document.getElementById('projList');
+    projList.innerHTML = PROJECTS.map(p => `
+      <article class="proj-card">
+        <div>
+          <span class="proj-tag">${p.tag}</span>
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+        </div>
+        <div class="proj-links">
+          <a href="${p.repo}" target="_blank" rel="noopener">Repo →</a>
+          ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live →</a>` : ''}
+        </div>
+      </article>
+    `).join('');
+
+    const palette = document.getElementById('palette');
+    const cmdInput = document.getElementById('cmdInput');
+    const cmdList = document.getElementById('cmdList');
+
+    const COMMANDS = [
+      { label: 'About', hint: '#about', run: () => document.getElementById('about').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Projects', hint: '#projects', run: () => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Copy email', hint: EMAIL, run: copyEmail },
+      { label: 'GitHub profile', hint: 'Ghost8911', run: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
+      { label: 'UI Trap live', hint: 'Demo', run: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
+      ...PROJECTS.map(p => ({
+        label: p.title,
+        hint: p.tag,
+        run: () => window.open(p.repo, '_blank', 'noopener')
+      }))
+    ];
+
+    let visible = COMMANDS;
+    let activeIdx = 0;
+
+    function renderCmds(q = '') {
+      const term = q.trim().toLowerCase();
+      visible = term
+        ? COMMANDS.filter(c => c.label.toLowerCase().includes(term) || c.hint.toLowerCase().includes(term))
+        : COMMANDS;
+      activeIdx = 0;
+
+      if (!visible.length) {
+        cmdList.innerHTML = '<div style="padding:10px;color:#8f96a8;">No matches</div>';
+        return;
+      }
+
+      cmdList.innerHTML = visible.map((c, i) => `
+        <button class="palette-opt${i === activeIdx ? ' active' : ''}" type="button" data-i="${i}">
+          <strong>${c.label}</strong>
+          <span>${c.hint}</span>
+        </button>
+      `).join('');
+
+      cmdList.querySelectorAll('.palette-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const picked = visible[Number(btn.dataset.i)];
+          closePalette();
+          picked?.run();
+        });
+      });
+    }
+
+    function openPalette() {
+      palette.hidden = false;
+      palette.classList.add('open');
+      cmdInput.value = '';
+      renderCmds('');
+      setTimeout(() => cmdInput.focus(), 10);
+    }
+
+    function closePalette() {
+      palette.hidden = true;
+      palette.classList.remove('open');
+    }
+
+    document.getElementById('openCmd').addEventListener('click', openPalette);
+    document.getElementById('closeCmd').addEventListener('click', closePalette);
+    palette.addEventListener('click', e => {
+      if (e.target === palette) closePalette();
+    });
+
+    cmdInput.addEventListener('input', () => renderCmds(cmdInput.value));
+    cmdInput.addEventListener('keydown', e => {
+      if (!visible.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIdx = (activeIdx + 1) % visible.length;
+        syncActive();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIdx = (activeIdx - 1 + visible.length) % visible.length;
+        syncActive();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const picked = visible[activeIdx];
+        closePalette();
+        picked?.run();
+      }
+    });
+
+    function syncActive() {
+      cmdList.querySelectorAll('.palette-opt').forEach((el, i) => {
+        el.classList.toggle('active', i === activeIdx);
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        palette.hidden ? openPalette() : closePalette();
+      } else if (e.key === 'Escape' && !palette.hidden) {
+        closePalette();
+      }
+    });
   </script>
 </body>
 </html>
