@@ -45,7 +45,7 @@
 </head>
 <body>
   <header>
-    <span>Kerala, IN · <span id="clock">--:--</span> IST</span>
+    <span style="display:flex;align-items:center;gap:8px;"><canvas id="analog" width="22" height="22"></canvas> Kerala, IN · <span id="clock">--:--</span> IST</span>
     <button id="openCmd" type="button">Ctrl+K</button>
   </header>
   <main>
@@ -83,5 +83,16 @@
     <button id="closeCmd" type="button">ESC</button>
     <div id="cmdList"></div>
   </div>
+  <script>
+    const ctx = document.getElementById('analog').getContext('2d');
+    function tick() {
+      const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+      document.getElementById('clock').textContent = d.toTimeString().slice(0, 5);
+      ctx.clearRect(0, 0, 22, 22); ctx.strokeStyle = '#D180C8'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(11, 11, 9.5, 0, 6.29); ctx.stroke();
+      const h = ((d.getHours() % 12) + d.getMinutes() / 60) * 0.5236 - 1.57, m = d.getMinutes() * 0.1047 - 1.57;
+      ctx.strokeStyle = '#F9CE75'; ctx.beginPath(); ctx.moveTo(11, 11); ctx.lineTo(11 + Math.cos(h) * 5, 11 + Math.sin(h) * 5); ctx.moveTo(11, 11); ctx.lineTo(11 + Math.cos(m) * 7.5, 11 + Math.sin(m) * 7.5); ctx.stroke();
+    }
+    tick(); setInterval(tick, 1000);
+  </script>
 </body>
 </html>
