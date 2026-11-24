@@ -12,6 +12,9 @@ i built this so people can see what ive been working on from robotics and hardwa
 - **Climate Action** web project around sustainability and action (`https://github.com/Ghost8911/climate-action`)
 
 ## how to run it locally
-1 Clone the repo to your machine
+1. Clone the repo to your machine
 ```sh
 git clone [https://github.com/Ghost8911/portfolio.git](https://github.com/Ghost8911/portfolio.git)
+
+**ai usage**
+i used gemini to help brainstorm the layout, troubleshoot css/js bugs, and build the ctrl+k command palette and analog/digital clock logic.
