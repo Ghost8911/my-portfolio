@@ -19,5 +19,7 @@ I built this so people can see what I've been working on—from robotics and har
    ```bash
    git clone [https://github.com/Ghost8911/Ghost8911.github.io.git](https://github.com/Ghost8911/Ghost8911.github.io.git)
 
-   AI usage
+   
+   
+ **Ai Usage**
 I used Gemini to help brainstorm the layout, troubleshoot CSS/JS bugs, and build the Ctrl+K command palette and analog/digital clock logic.
