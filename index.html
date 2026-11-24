@@ -183,6 +183,142 @@
       color: #e2c6ff;
       text-decoration: underline;
     }
+    #projects {
+      padding-top: 34px;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    #projList {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .proj-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .proj-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--lime);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .proj-card h3 {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .proj-card p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .proj-links {
+      display: flex;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .proj-links a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .proj-links a:hover {
+      color: #e2c6ff;
+      text-decoration: underline;
+    }
+
+    #palette {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 17, 21, 0.85);
+      padding: 12vh 16px 0;
+    }
+
+    #palette.open {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    #palette > input,
+    #palette > button {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    #cmdInput {
+      width: 320px;
+      max-width: 70vw;
+      outline: none;
+    }
+
+    #closeCmd {
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    #cmdList {
+      position: fixed;
+      top: calc(12vh + 42px);
+      width: 380px;
+      max-width: 90vw;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .palette-opt {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      padding: 9px 12px;
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .palette-opt:hover,
+    .palette-opt.active {
+      background: #222632;
+      color: var(--lime);
+    }
+
+    .palette-opt span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      #projList { grid-template-columns: 1fr; }
+    }
   </style>
   </header>
   <section id="about">
