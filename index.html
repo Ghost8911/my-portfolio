@@ -101,6 +101,12 @@
     ];
     document.getElementById('projList').innerHTML = items.map(p => `<article class="proj-card"><div><span class="proj-tag">${p.tag}</span><h3>${p.name}</h3><p>${p.desc}</p></div><div class="proj-links"><a href="${p.url}" target="_blank" rel="noopener">Open ↗</a></div></article>`).join('');
     document.getElementById('copyBtn').onclick = () => { navigator.clipboard.writeText('sidhuvinod777@gmail.com'); document.getElementById('emailNote').textContent = 'Copied sidhuvinod777@gmail.com!'; };
+    const pal = document.getElementById('palette'), inp = document.getElementById('cmdInput'), list = document.getElementById('cmdList');
+    const cmds = [{ label: 'GitHub (@Ghost8911)', run: () => open('https://github.com/Ghost8911', '_blank') }, { label: 'Copy Email', run: () => document.getElementById('copyBtn').click() }, ...items.map(p => ({ label: p.name, run: () => open(p.url, '_blank') }))];
+    const renderCmds = (q = '') => { const f = cmds.filter(c => c.label.toLowerCase().includes(q.toLowerCase())); list.innerHTML = f.map((c, i) => `<button class="palette-opt" data-i="${i}">${c.label}</button>`).join(''); list.querySelectorAll('button').forEach((b, i) => b.onclick = () => { f[i].run(); pal.hidden = true; pal.classList.remove('open'); }); };
+    document.getElementById('openCmd').onclick = () => { pal.hidden = false; pal.classList.add('open'); inp.value = ''; renderCmds(); inp.focus(); };
+    document.getElementById('closeCmd').onclick = () => { pal.hidden = true; pal.classList.remove('open'); };
+    inp.oninput = () => renderCmds(inp.value); onkeydown = e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); document.getElementById('openCmd').click(); } if (e.key === 'Escape') document.getElementById('closeCmd').click(); };
   </script>
 </body>
 </html>
