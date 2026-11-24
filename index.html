@@ -16,6 +16,61 @@
       <span id="clock">--:--</span> IST
     </span>
     <button id="openCmd" type="button">Ctrl+K</button>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1115;
+      --surface: #161920;
+      --border: #252a36;
+      --text: #eef0f4;
+      --muted: #8f96a8;
+      --lime: #b8f227;
+      --purple: #9d4edd;
+      --sans: "DM Sans", system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.55;
+      padding: 24px 28px 80px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    #openCmd {
+      background: var(--surface);
+      color: #e2c6ff;
+      border: 1px solid #38254d;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    #openCmd:hover {
+      border-color: var(--purple);
+    }
+  </style>
   </header>
   <section id="about">
     <img
