@@ -95,9 +95,23 @@
     setInterval(updateClock, 15000);
 
     const copyBtn = document.getElementById('copyBtn');
-    const SmailNote = document.getElementById('emailNote');
+    const emailNote = document.getElementById('emailNote');
     let resetTimer;
 
+    async function copyEmail() {
+      clearTimeout(resetTimer);
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        emailNote.textContent = 'Copied ' + EMAIL;
+      } catch {
+        emailNote.textContent = EMAIL;
+      }
+      resetTimer = setTimeout(() => {
+        emailNote.textContent = EMAIL;
+      }, 2200);
+    }
 
+    copyBtn.addEventListener('click', copyEmail);
+  </script>
 </body>
 </html>
