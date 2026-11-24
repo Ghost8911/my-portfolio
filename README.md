@@ -1,20 +1,20 @@
-# Sidharths Portfolio!!
+# Sidharth's Portfolio
 
-hey this is my personal site where i keep track of my web stuff and hardware builds :)
+Hey, this is my personal site where I keep track of my web stuff and hardware builds :)
 
-## why i made this
-i built this so people can see what ive been working on from robotics and hardware tinkering to random web projects and find an easy way to reach out or check out my repos
+## Why I made this
 
-## whats in here
-- **Robotic Hand** mechanical hand build with servos and linkage parts (`https://github.com/Ghost8911/Robotic-Hand`)
-- **Bionic Arm** articulated arm prototype testing motion and fit (`https://github.com/Ghost8911/Bionic-arm`)
-- **UI Trap** a mischievous little web experiment (`https://ghost8911.github.io/useless-website/`)
-- **Climate Action** web project around sustainability and action (`https://github.com/Ghost8911/climate-action`)
+I built this so people can see what I've been working on—from robotics and hardware tinkering to random web projects—and find an easy way to reach out or check out my repos.
 
-## how to run it locally
-1. Clone the repo to your machine
-```sh
-git clone [https://github.com/Ghost8911/portfolio.git](https://github.com/Ghost8911/portfolio.git)
+## What's in here
 
-**ai usage**
-i used gemini to help brainstorm the layout, troubleshoot css/js bugs, and build the ctrl+k command palette and analog/digital clock logic.
+- [Robotic Hand](https://github.com/Ghost8911/Robotic-Hand) — mechanical hand build with servos and linkage parts
+- [Bionic Arm](https://github.com/Ghost8911/Bionic-arm) — articulated arm prototype testing motion and fit
+- [UI Trap](https://ghost8911.github.io/useless-website/) — a mischievous little web experiment
+- [Climate Action](https://github.com/Ghost8911/climate-action) — web project around sustainability and action
+
+## How to run it locally
+
+1. Clone the repo to your machine:
+   ```bash
+   git clone [https://github.com/Ghost8911/Ghost8911.github.io.git](https://github.com/Ghost8911/Ghost8911.github.io.git)
