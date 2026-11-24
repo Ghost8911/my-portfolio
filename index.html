@@ -507,3 +507,181 @@
       <div class="palette-list" id="cmdList"></div>
     </div>
   </div>
+  <script>
+    const EMAIL = 'sidhuvinod777@gmail.com';
+
+    const PROJECTS = [
+      {
+        title: 'Robotic Hand',
+        tag: 'Hardware',
+        desc: 'Mechanical hand built with servos and linkage parts.',
+        repo: 'https://github.com/Ghost8911/Robotic-Hand'
+      },
+      {
+        title: 'Bionic Arm',
+        tag: 'Hardware',
+        desc: 'Articulated arm prototype testing motion and fit.',
+        repo: 'https://github.com/Ghost8911/Bionic-arm'
+      },
+      {
+        title: 'UI Trap',
+        tag: 'Web',
+        desc: 'Small web experiment that messes with normal UI clicks.',
+        repo: 'https://github.com/Ghost8911/useless-website',
+        live: 'https://ghost8911.github.io/useless-website/'
+      },
+      {
+        title: 'Climate Action',
+        tag: 'Web',
+        desc: 'Web project focused on environmental action.',
+        repo: 'https://github.com/Ghost8911/climate-action'
+      }
+    ];
+
+    const projGrid = document.getElementById('projGrid');
+    projGrid.innerHTML = PROJECTS.map(p => `
+      <article class="proj-card">
+        <div>
+          <span class="proj-tag">${p.tag}</span>
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+        </div>
+        <div class="proj-links">
+          <a href="${p.repo}" target="_blank" rel="noopener">Repo →</a>
+          ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live →</a>` : ''}
+        </div>
+      </article>
+    `).join('');
+
+    function updateClock() {
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+    }
+    updateClock();
+    setInterval(updateClock, 15000);
+
+    const copyBtn = document.getElementById('copyBtn');
+    const emailNote = document.getElementById('emailNote');
+    let resetTimer;
+
+    async function copyEmail() {
+      clearTimeout(resetTimer);
+      try {
+        await navigator.clipboard.writeText(EMAIL);
+        emailNote.textContent = 'Copied ' + EMAIL;
+      } catch {
+        emailNote.textContent = EMAIL;
+      }
+      resetTimer = setTimeout(() => {
+        emailNote.textContent = EMAIL;
+      }, 2200);
+    }
+    copyBtn.addEventListener('click', copyEmail);
+
+    const paletteBg = document.getElementById('paletteBg');
+    const cmdInput = document.getElementById('cmdInput');
+    const cmdList = document.getElementById('cmdList');
+
+    const COMMANDS = [
+      { label: 'About', hint: '#about', run: () => document.getElementById('about').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Projects', hint: '#projects', run: () => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }) },
+      { label: 'Copy email', hint: EMAIL, run: copyEmail },
+      { label: 'GitHub profile', hint: 'Ghost8911', run: () => window.open('https://github.com/Ghost8911', '_blank', 'noopener') },
+      { label: 'UI Trap live', hint: 'Demo', run: () => window.open('https://ghost8911.github.io/useless-website/', '_blank', 'noopener') },
+      ...PROJECTS.map(p => ({
+        label: p.title,
+        hint: p.tag,
+        run: () => window.open(p.repo, '_blank', 'noopener')
+      }))
+    ];
+
+    let visible = COMMANDS;
+    let activeIdx = 0;
+
+    function renderList(q = '') {
+      const term = q.trim().toLowerCase();
+      visible = term
+        ? COMMANDS.filter(c => c.label.toLowerCase().includes(term) || c.hint.toLowerCase().includes(term))
+        : COMMANDS;
+      activeIdx = 0;
+
+      if (!visible.length) {
+        cmdList.innerHTML = '<div style="padding:12px;color:#8f96a8;font-size:13px;">No matches</div>';
+        return;
+      }
+
+      cmdList.innerHTML = visible.map((c, i) => `
+        <button class="palette-opt${i === activeIdx ? ' active' : ''}" type="button" data-i="${i}">
+          <strong>${c.label}</strong>
+          <span>${c.hint}</span>
+        </button>
+      `).join('');
+
+      cmdList.querySelectorAll('.palette-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const picked = visible[Number(btn.dataset.i)];
+          closePalette();
+          picked?.run();
+        });
+      });
+    }
+
+    function openPalette() {
+      paletteBg.classList.add('open');
+      paletteBg.setAttribute('aria-hidden', 'false');
+      cmdInput.value = '';
+      renderList('');
+      setTimeout(() => cmdInput.focus(), 10);
+    }
+
+    function closePalette() {
+      paletteBg.classList.remove('open');
+      paletteBg.setAttribute('aria-hidden', 'true');
+    }
+
+    document.getElementById('openCmd').addEventListener('click', openPalette);
+    document.getElementById('closeCmd').addEventListener('click', closePalette);
+    paletteBg.addEventListener('click', e => {
+      if (e.target === paletteBg) closePalette();
+    });
+
+    cmdInput.addEventListener('input', () => renderList(cmdInput.value));
+    cmdInput.addEventListener('keydown', e => {
+      if (!visible.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIdx = (activeIdx + 1) % visible.length;
+        syncHighlight();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIdx = (activeIdx - 1 + visible.length) % visible.length;
+        syncHighlight();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const picked = visible[activeIdx];
+        closePalette();
+        picked?.run();
+      }
+    });
+
+    function syncHighlight() {
+      cmdList.querySelectorAll('.palette-opt').forEach((el, i) => {
+        el.classList.toggle('active', i === activeIdx);
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        paletteBg.classList.contains('open') ? closePalette() : openPalette();
+      } else if (e.key === 'Escape' && paletteBg.classList.contains('open')) {
+        closePalette();
+      }
+    });
+  </script>
+</body>
+</html>
