@@ -113,5 +113,45 @@
 
     copyBtn.addEventListener('click', copyEmail);
   </script>
+  <script>
+    const EMAIL = 'sidhuvinod777@gmail.com';
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+
+      const istParts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).formatToParts(now);
+
+      const h = Number(istParts.find(p => p.type === 'hour')?.value || 0) % 12;
+      const m = Number(istParts.find(p => p.type === 'minute')?.value || 0);
+
+      const minDeg = m * 6;
+      const hourDeg = h * 30 + m * 0.5;
+
+      document.getElementById('minHand').setAttribute('transform', `rotate(${minDeg} 12 12)`);
+      document.getElementById('hourHand').setAttribute('transform', `rotate(${hourDeg} 12 12)`);
+    }
+
+    updateClock();
+    setInterval(updateClock, 15000);
+
+    const copyBtn = document.getElementById('copyBtn');
+    const emailNote = document.getElementById('emailNote');
+    let resetTimer;
+
+    async function copyEmail() {
+      clearTimeout(resetTimer);
+      try {
+
 </body>
 </html>
